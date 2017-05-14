@@ -1,0 +1,55 @@
+        #id_titulo {
+            font-weight: bold;
+        }
+        .divCreate {
+            background-color: #4582ec;
+            border: 3px solid white;
+            border-radius: 10px;
+        }
+        .divErrors {
+            color: red;
+            background-color: yellow;
+            border: 2px solid red;
+        }
+        .fontWhite {
+            color: white;
+        }
+        .divCreate {
+            background-color: #4582ec;
+            border: 3px solid white;
+            border-radius: 10px;
+            color: white;
+        }
+        .imgHome {
+            width: 1028px;
+            height: 768px;
+            border: 5px solid black;
+        }
+        .alert-info {
+            color: blue;
+        }
+        .alert-success {
+            color: green;
+        }
+        .alert-warning {
+            color: orange;
+        }
+        .alert-danger {
+            color: red;
+        }
+        .divPost {
+            background-color: white;
+            color: black;
+            margin-top: 30px;
+        }
+        .divPost:hover {
+            background-color: yellow;
+            color: black;
+            margin-top: 30px;
+            text-decoration: none;
+        }
+        .img-show {
+            width: 500px;
+            border: 3px solid black;
+            border-radius: 10px;
+        }

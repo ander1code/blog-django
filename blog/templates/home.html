@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container">
+<table>
+    <thead><tr><th></th></tr></thead>
+    <tbody>
+        {% for post in posts %}
+        <tr>
+            <td>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1>{{post.titulo}}</h1>
+                        <p>Publicado por <b>{{post.autor.username}}</b> em <b>{{post.dataCriacao}}</b></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <img src="{{post.imagem.url}}" alt="" class="img-show img-responsive">
+                    </div>
+                    <div class="col-md-7">
+                        <p>{{post.texto}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <a href="{% url 'blog.views.show' id=post.id %}" class="col-md-1 btn btn-primary pull-right">Mais</a>
+                    </div>
+                </div>
+                 <p><hr></p>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+    <tfoot>
+        <tr>
+            <td>
+               <div class="pull-right">
+                  <span>
+                  {% if posts.has_previous %}
+                    <a href="?page={{ posts.previous_page_number }}"><span class="glyphicon glyphicon-arrow-left"></span></a>
+                  {% endif %}
+                  <span>
+                    Página {{ posts.number }} de {{ posts.paginator.num_pages }}
+                  </span>
+                  {% if posts.has_next %}
+                    <a href="?page={{ posts.next_page_number }}"><span class="glyphicon glyphicon-arrow-right"></span></a>
+                  {% endif %}
+                  </span>
+               </div>
+            </td>
+        </tr>
+    </tfoot>
+
+</table>
+</div>
+{% endblock %}

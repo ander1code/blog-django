@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container divCreate">
+
+    <h1>Editar Postagem</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% if form.errors %}
+        <div class="divErrors">
+            <div>
+                <ol>
+                    <ul>{{form.autor.errors}}</ul>
+                    <ul>{{form.titulo.errors}}</ul>
+                    <ul>{{form.texto.errors}}</ul>
+                    <ul>{{form.imagem.errors}}</ul>
+                    <ul>{{form.dataCriacao.errors}}</ul>
+                </ol>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="form-group">
+            <input type="hidden" id="id_autor" name="autor" value="{{form.autor.value}}">
+        </div>
+
+        <div class="form-group">
+            <label for="" class="">Título</label>
+            <input id="id_titulo" maxlength="100" name="titulo" type="text" value="{{form.titulo.value}}"
+                   class="form-control"/>
+        </div>
+
+        <div class="form-group">
+            <label for="" class="">Texto</label>
+            <textarea cols="40" id="id_texto" name="texto" rows="15"
+                      class="form-control">{{form.texto.value}}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label>Imagem Atual:</label>
+            <label><a href="/media/{{form.imagem.value}}">{{form.imagem.value}}</a></label>
+        </div>
+        <div class="form-group">
+            <label for="imagem">Imagem</label>
+            <input id="id_imagem" class="form-control" name="imagem" type="file"/>
+        </div>
+
+        <div class="form-group">
+            <input id="id_dataCriacao" name="dataCriacao" readonly="True" type="hidden" value="10/05/2017 23:10:45"
+                   class="form-control"/>
+        </div>
+
+        <div class="form-group">
+            <button type="button" class="btn btn-warning col-md-1 pull-right" data-toggle="modal"
+                    data-target="#editarModal">Editar
+            </button>
+            <button type="button" class="btn btn-danger col-md-1 pull-right" data-toggle="modal"
+                    data-target="#excluirModal">Excluir
+            </button>
+            <a href="{% url 'home' %}" class="btn btn-default col-md-1 pull-right">Voltar</a>
+        </div>
+    </div>
+
+        <div id="excluirModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Questão</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Deseja confirmar a exclusão dessa postagem?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
+                        <a href="{% url 'blog.views.excluir' id=post_id %}" class="btn btn-danger">Sim</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="editarModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Questão</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Deseja confirmar a edição dessa postagem?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Não</button>
+                        <input type="submit" value="Sim" class="btn btn-warning">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </form>
+
+
+{% endblock %}
