@@ -4,6 +4,7 @@ import datetime
 class Postagem(models.Model):
     autor = models.ForeignKey('auth.User')
     titulo = models.CharField(max_length=100)
+    briefing = models.CharField(max_length=50)
     texto = models.TextField()
     imagem = models.ImageField(upload_to='media', blank=True, null=True, default='noimage.png')
     dataCriacao = models.DateTimeField('Data da Criacao')

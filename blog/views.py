@@ -26,45 +26,9 @@ def do_login(request):
 
 
 def home(request):
-    posts = Postagem.objects.all ( ).order_by ( '-dataCriacao' )
-    paginator = Paginator ( posts , 7 )
-    page = request.GET.get ( 'page' )
-    try:
-        posts = paginator.page ( page )
-    except PageNotAnInteger:
-        posts = paginator.page ( 1 )
-    except EmptyPage:
-        posts = paginator.page ( paginator.num_pages )
-    return render ( request , 'home.html' , {'posts': posts} )
-
-
-@login_required ( login_url="/login/" )
-def criar(request):
-    if request.method == 'POST':
-        frm = frmBlog ( request.POST , request.FILES )
-        if frm.is_valid ( ):
-            postagem = frm.save ( commit=False )
-            postagem.autor_id = request.user.id
-            postagem.titulo = frm.cleaned_data.get ( 'titulo' )
-            postagem.texto = frm.cleaned_data.get ( 'texto' )
-            postagem.imagem = frm.cleaned_data.get ( 'imagem' )
-            postagem.dataCriacao = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-            postagem.save ( )
-            messages.success ( request , 'Postagem criada com sucesso.' )
-            return render ( request , 'home.html')
-        else:
-            return render ( request , 'criacao.html' , {'form': frm} )
-    else:
-        dataCriacao = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        frm = frmBlog (
-            initial={'autor': request.user.id , 'dataCriacao':dataCriacao, 'titulo': '' , 'texto': ''} )
-    return render ( request , 'criacao.html' , {'form': frm , 'nome': request.user.username} )
-
-
-def pesquisar(request):
     if request.POST:
         p_busca = request.POST['busca'] + '%'
-        posts = Postagem.objects.extra ( where=["titulo LIKE %s"] , params=[p_busca] )
+        posts = Postagem.objects.extra ( where=["titulo LIKE %s"] , params=[p_busca] ).order_by ( '-dataCriacao' )
         if len ( posts ) == 0:
             messages.warning ( request , 'Nenhum artigo foi encontrado com esse criterio.' )
         paginator = Paginator ( posts , 7 )
@@ -75,8 +39,51 @@ def pesquisar(request):
             posts = paginator.page ( 1 )
         except EmptyPage:
             posts = paginator.page ( paginator.num_pages )
-        return render ( request , 'pesquisa.html' , {'posts': posts} )
-    return render ( request , "pesquisa.html" )
+
+        postsAll = Postagem.objects.all ( ).order_by ( '-dataCriacao' )
+        postUltimo = postsAll[:1]
+        post2 = postsAll[1:3]
+        post3 = postsAll[3:6]
+
+        return render ( request , 'home.html' , {'postsAll':posts, 'postUltimo': postUltimo, 'post2': post2, 'post3': post3} )          
+    else:
+        postsAll = Postagem.objects.all ( ).order_by ( '-dataCriacao' )
+        postUltimo = postsAll[:1]
+        post2 = postsAll[1:3]
+        post3 = postsAll[3:6]
+
+        paginator = Paginator ( postsAll , 7 )
+        page = request.GET.get ( 'page' )
+        try:
+            postsAll = paginator.page ( page )
+        except PageNotAnInteger:
+            postsAll = paginator.page ( 1 )
+        except EmptyPage:
+            postsAll = paginator.page ( paginator.num_pages )
+        return render ( request , 'home.html' , {'postsAll':postsAll, 'postUltimo': postUltimo, 'post2': post2, 'post3': post3} )  
+
+@login_required ( login_url="/login/" )
+def criar(request):
+    if request.method == 'POST':
+        frm = frmBlog ( request.POST , request.FILES )
+        if frm.is_valid ( ):
+            postagem = frm.save ( commit=False )
+            postagem.autor_id = request.user.id
+            postagem.titulo = frm.cleaned_data.get ( 'titulo' )
+            postagem.briefing = frm.cleaned_data.get ( 'briefing' )
+            postagem.texto = frm.cleaned_data.get ( 'texto' )
+            postagem.imagem = frm.cleaned_data.get ( 'imagem' )
+            postagem.dataCriacao = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            postagem.save ( )
+            messages.success ( request , 'Postagem criada com sucesso.' )
+            return redirect('blog.views.home')
+        else:
+            return render ( request , 'criacao.html' , {'form': frm} )
+    else:
+        dataCriacao = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        frm = frmBlog (
+            initial={'autor': request.user.id , 'dataCriacao':dataCriacao, 'titulo': '' , 'briefing': '', 'texto': ''} )
+    return render ( request , 'criacao.html' , {'form': frm , 'nome': request.user.username} )
 
 
 def show(request , id):
@@ -95,6 +102,7 @@ def editar(request , id):
                 postagem = frm.save ( commit=False )
                 postagem.autor_id = request.user.id
                 postagem.titulo = frm.cleaned_data.get ( 'titulo' )
+                postagem.briefing = frm.cleaned_data.get ( 'briefing' )
                 postagem.texto = frm.cleaned_data.get ( 'texto' )
                 postagem.imagem = frm.cleaned_data.get ( 'imagem' )
                 postagem.save ( )
@@ -103,7 +111,9 @@ def editar(request , id):
             else:
                 return render ( request , 'edicao.html' , {'form': frm , 'post_id': id} )
         else:
+            print post
             frm = frmBlog ( initial={'autor': post.autor ,
+                                     'briefing': post.briefing,
                                      'titulo': post.titulo ,
                                      'texto': post.texto ,
                                      'imagem': post.imagem ,
@@ -112,7 +122,7 @@ def editar(request , id):
         return render ( request , 'edicao.html' , {'form': frm , 'post_id': id} )
     else:
         messages.error ( request , 'Este usuario nao esta autorizado a editar esta postagem.' )
-        return HttpResponseRedirect ( 'pesquisar' )
+    return render ( request , 'show.html' , {'post':post} )   
 
 
 @login_required ( login_url='/login/' )

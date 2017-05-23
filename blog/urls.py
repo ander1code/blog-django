@@ -6,7 +6,6 @@ from django.conf.urls.static import static
 urlpatterns = patterns('blog.views',
     url(r'^$', views.home, name='home'),
     url(r'criar/$', views.criar, name='criar'),
-    url(r'pesquisar/$', views.pesquisar, name='pesquisar'),
     url(r'show/(?P<id>\d+)/$', views.show, name='show'),
     url(r'editar/(?P<id>\d+)/$', views.editar, name='editar'),
     url(r'excluir/(?P<id>\d+)/$', views.excluir, name='excluir')
