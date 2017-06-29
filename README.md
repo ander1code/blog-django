@@ -11,7 +11,7 @@ Protótipo de um Blog desenvolvido utilizando *Django* e banco de dados *SQLite*
 
 2. *Softwares* utilizados para o desenvolvimento:	
 - *Python* versão 2.7.13
-- *Django* versão 1.5.12 
+- *Django* versão 1.11.2 
 - *JetBrains PyCharm Community Edition 2017.1 x64*
 - *SQLite* 3
 - *Bootstrap* 3.3.7
