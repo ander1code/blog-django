@@ -7,14 +7,14 @@
          <span class="icon-bar"></span>
          <span class="icon-bar"></span>
          </button>
-         <a class="navbar-brand" href="{% url 'blog.views.home' %}">blogDjango</a>
+         <a class="navbar-brand" href="{% url 'home' %}">blogDjango</a>
       </div>
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
          <ul class="nav navbar-nav">
-            <li><a href="{% url 'blog.views.home' %}"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+            <li><a href="{% url 'home' %}"><span class="glyphicon glyphicon-home"></span> Home</a></li>
             <li>
                {% if user.is_authenticated %}
-               <a href="{% url 'blog.views.criar' %}"><span class="glyphicon glyphicon-plus"></span> Criar</a>
+               <a href="{% url 'criar' %}"><span class="glyphicon glyphicon-plus"></span> Criar</a>
                {% endif %}
             </li>
          </ul>
@@ -28,7 +28,7 @@
                {% if user.is_authenticated %}
                <a href="#" data-toggle="modal" data-target="#logoutModal"><span class="glyphicon glyphicon-log-out"></span> Logout</a>
                {% else %}
-               <a href="{% url 'login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+               <a href="{% url 'do_login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a>
                {%endif%}
             </li>
          </ul>

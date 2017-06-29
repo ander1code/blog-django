@@ -5,7 +5,7 @@
    <div class="row">
      
          <div class="col-md-8">
-          <a href="{% url 'blog.views.show' id=postagem.id %}">
+          <a href="{% url 'show' id=postagem.id %}">
             <p class="tituloPrincipal">{{postagem.titulo}}</p>
             <ul>
                <li class="txtBriefing">
@@ -17,7 +17,7 @@
      
       {% endfor %}
       <div class="col-md-4">
-         <form action="{% url 'blog.views.home' %}" method="POST">
+         <form action="{% url 'home' %}" method="POST">
             {% csrf_token %}
             <div class="input-group">
                <input type="text" class="form-control" id="busca" name="busca" placeholder="Buscar por postagens anteriores">
@@ -28,7 +28,7 @@
          <ul>
             <h5 class="titulotodos">Todas as Postagens:</h5>
             {% for postagem in postsAll %}
-            <a href="{% url 'blog.views.show' id=postagem.id %}">
+            <a href="{% url 'show' id=postagem.id %}">
                <li>
                   <p class="titulolista">{{postagem.titulo}}</p>
                </li>
@@ -57,7 +57,7 @@
    </div>
    <div class="row">
       {% for postagem in post2 %}
-      <a href="{% url 'blog.views.show' id=postagem.id %}">
+      <a href="{% url 'show' id=postagem.id %}">
          <div class="col-md-3">
             <p class="titulopost2">{{postagem.titulo}}</p>
          </div>
@@ -71,7 +71,7 @@
    </div>
    <div class="row">
       {% for postagem in post3 %}
-      <a href="{% url 'blog.views.show' id=postagem.id %}">
+      <a href="{% url 'show' id=postagem.id %}">
          <div class="col-md-2">
             <img src="{{postagem.imagem.url}}" class="img-responsive imghome">
             <p class="titulopost3">{{postagem.titulo}}</p>

@@ -10,8 +10,10 @@
 
 .divErrors {
     color: red;
-    background-color: yellow;
+    background-color: #eed78f;
     border: 2px solid red;
+    border-radius: 10px;
+    font-weight: bold;
 }
 
 .fontWhite {
