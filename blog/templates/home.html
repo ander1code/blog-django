@@ -3,26 +3,29 @@
 <div class="container">
    {% for postagem in postUltimo %}
    <div class="row">
-     
-         <div class="col-md-8">
-          <a href="{% url 'show' id=postagem.id %}">
+
+      <div class="col-md-8">
+         <a href="{% url 'show' id=postagem.id %}">
             <p class="tituloPrincipal">{{postagem.titulo}}</p>
             <ul>
                <li class="txtBriefing">
                   <p>{{postagem.briefing}}</p>
                </li>
             </ul>
-             </a>
-         </div>
-     
+            <p><img src="/media/{{ postagem.imagem }}" alt="{{ postagem.titulo }}"
+                  style="height:300px; border:2px solid black; border-radius:5px;"></p>
+         </a>
+      </div>
+
       {% endfor %}
       <div class="col-md-4">
          <form action="{% url 'home' %}" method="POST">
             {% csrf_token %}
             <div class="input-group">
-               <input type="text" class="form-control" id="busca" name="busca" placeholder="Buscar por postagens anteriores">
+               <input type="text" class="form-control" id="busca" name="busca"
+                  placeholder="Buscar por postagens anteriores">
                <span class="input-group-btn">
-               <button class="btn btn-info" type="submit"><span class="glyphicon glyphicon-search"></span></button>
+                  <button class="btn btn-info" type="submit"><span class="glyphicon glyphicon-search"></span></button>
             </div>
          </form>
          <ul>
@@ -37,15 +40,16 @@
          </ul>
          <div class="pull-right">
             <span>
-            {% if postsAll.has_previous %}
-            <a href="?page={{ postsAll.previous_page_number }}"><span class="glyphicon glyphicon-arrow-left"></span></a>
-            {% endif %}
-            <span>
-            Página {{ postsAll.number }} de {{ postsAll.paginator.num_pages }}
-            </span>
-            {% if postsAll.has_next %}
-            <a href="?page={{ postsAll.next_page_number }}"><span class="glyphicon glyphicon-arrow-right"></span></a>
-            {% endif %}
+               {% if postsAll.has_previous %}
+               <a href="?page={{ postsAll.previous_page_number }}"><span
+                     class="glyphicon glyphicon-arrow-left"></span></a>
+               {% endif %}
+               <span>
+                  Página {{ postsAll.number }} de {{ postsAll.paginator.num_pages }}
+               </span>
+               {% if postsAll.has_next %}
+               <a href="?page={{ postsAll.next_page_number }}"><span class="glyphicon glyphicon-arrow-right"></span></a>
+               {% endif %}
             </span>
          </div>
       </div>

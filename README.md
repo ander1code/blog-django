@@ -10,8 +10,8 @@ Protótipo de um Blog desenvolvido utilizando *Django* e banco de dados *SQLite*
 - Possui interface administrativa (Superusuário).
 
 2. *Softwares* utilizados para o desenvolvimento:	
-- *Python* versão 2.7.13
-- *Django* versão 1.11.2 
-- *JetBrains PyCharm Community Edition 2017.1 x64*
+- *Python* versão 3.9.7
+- *Django* versão 3.2.7 
+- *Visual Studio Code x64*
 - *SQLite* 3
 - *Bootstrap* 3.3.7
