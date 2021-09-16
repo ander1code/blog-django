@@ -1,1 +1,2 @@
-SECRET_KEY = '^l7(@+gt)wf)mnsl(2th^7e*ac48t^6l06pr2o2r2x63q_9x+_'
+*.pyc
+__pycache__
