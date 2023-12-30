@@ -2,33 +2,43 @@
 {% block content %}
 <div class="container">
    <div class="row">
-      <div class="col-md-7 center-block">
-         <p class="tituloShow">{{post.titulo}}</p>
-         <ul>
-            <li class="txtBriefingShow">
-               <p>{{post.briefing}}</p>
-            </li>
-         </ul>
-         <p>Publicado por <b>{{autor.username}}</b> em <b>{{post.dataCriacao}}</b></p>
-      </div>
-   </div>
-   <div class="row">
-      <div class="col-md-7 center-block">
-         <a href="{{post.imagem.url}}">
-            <img src="{{post.imagem.url}}" alt="" class="imgShow img-responsive">
-         </a>
-         {{post.texto}}
-      </div>
-      <div class="col-md-7">
-         <p></p>
-      </div>
-   </div>
-   <div class="row">
-      <div class="col-md-12">
-         <a href="{% url 'home' %}" class="btn btn-default col-md-1 pull-right">Voltar</a>
-         {% if user.is_authenticated %}
-         <a href="{% url 'editar' id=post.id %}" class="btn btn-warning pull-right col-md-1">Editar</a>
-         {%endif%}
+      <div class=" col-md-offset-1 col-md-10 col-md-offset-1">
+         <div class="form-group">
+            <p class="title-post">{{post.title}}</p>
+         </div>
+         <div class="form-group">
+            <p class="briefing-post">{{post.briefing}}</p>
+         </div>
+         <div class="form-group">
+            <p>Published by <b>{{author.username}}</b> at <b>{{post.createDate}}</b>
+               {% if post.UpdateDate != None %}
+               and edited at <b>{{post.UpdateDate}}</b>.
+               {% else %}
+               .
+               {%endif%}
+            </p>
+         </div>
+         <div class="form-group">
+            <hr>
+         </div>
+         <div class="form-group">
+            <a href="{{post.image.url}}">
+               <img src="{{post.image.url}}" alt="{{post.title}}" class="imgShow img-responsive">
+            </a>
+            <p class="text-post">
+               <span class="first-char-show">{{post.text | slice:":1"}}</span>
+               {{post.text | slice:"1:"}}
+            </p>
+         </div>
+         <div class="form-group">
+            <hr>
+         </div>
+         <div class="form-group">
+            <a href="{% url 'home' %}" class="btn btn-default col-md-1 pull-right">Back</a>
+            {% if user.is_authenticated %}
+            <a href="{% url 'edit' id=post.id %}" class="btn btn-warning pull-right col-md-1">Edit</a>
+            {%endif%}
+         </div>
       </div>
    </div>
 </div>

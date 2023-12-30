@@ -1,19 +1,19 @@
-function DesabilitarForm(){
-	 $("#frmLogin :input").prop('disabled','disabled'); 
+function DisableForm() {
+  $("#frmLogin :input").prop("disabled", "disabled");
 }
 
-function LoginSucessso(){
-	$("#logModal").css('color','green');
-  $(".modal-title").text("Informação");
-  $("#mensagem").text('Usuário logado com sucesso.'); 
-  $("#btnLogin").removeClass( "btn-danger" ).addClass( "btn-success" );
-  $("#logModal").modal('show');  
+function SuccessfullyLogin() {
+  $("#logModal").css("color", "green");
+  $(".modal-title").text("Information");
+  $("#mensagem").text("Successfully logged.");
+  $("#btnLogin").removeClass("btn-danger").addClass("btn-success");
+  $("#logModal").modal("show");
 }
 
-function LoginErro(){
-	$("#logModal").css('color','red');
+function LoginError() {
+  $("#logModal").css("color", "red");
   $(".modal-title").text("Erro");
-  $("#mensagem").text('Usuário e senha incorretos.'); 
-  $("#btnLogin").removeClass( "btn-success" ).addClass( "btn-danger" );
-  $("#logModal").modal('show');  
+  $("#mensagem").text("Invalid Username and Password.");
+  $("#btnLogin").removeClass("btn-success").addClass("btn-danger");
+  $("#logModal").modal("show");
 }

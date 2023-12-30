@@ -4,20 +4,18 @@
 from django import forms
 from .models import *
 
-
-class frmBlog(forms.ModelForm):
-    #autor = forms.IntegerField(error_messages={'required': 'Autor está vazio.'})
-    titulo = forms.CharField(error_messages={
-                             'required': 'Titulo está vazio.', 'max_length': 'Título esta com mais de 50 caracteres.'})
+class frmPost(forms.ModelForm):
+    author = forms.ModelChoiceField(queryset=None, required=False)
+    title = forms.CharField(error_messages={
+                             'required': 'Title is empty.', 'max_length': 'Title has more than 70 characters long.'})
     briefing = forms.CharField(error_messages={
-                               'required': 'Briefing esta vazio.', 'max_length': 'Briefing esta com mais de 50 caracteres.'})
-    texto = forms.CharField(error_messages={
-                            'required': 'Texto esta vazio.', 'max_length': 'Titulo esta com mais de 1400 caracteres.'})
-    dataCriacao = forms.CharField(
-        error_messages={'required': 'Data de criacao vazia.'})
-    imagem = forms.ImageField(error_messages={'required': 'Image está vazia.'})
-    dataCriacao.widget.attrs['readonly'] = True
+                               'required': 'Briefing is empty.', 'max_length': 'Briefing has more than 100 characters.'})
+    text = forms.CharField(error_messages={
+                            'required': 'Text is empty.', 'max_length': 'Text has more than 3000 characters.'})
+    image = forms.ImageField(error_messages={'required': 'Image wasn\'t selected.'})
+    createDate = forms.DateTimeField(required=False)
+    updateDate = forms.DateTimeField(required=False)
 
     class Meta:
-        model = Postagem
+        model = Post
         fields = "__all__"

@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container divForm">
+   <div class="row">
+      <div class="col-md-12">
+         <h1>Create</h1>
+         <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {% if form.errors %}
+            <div class="divErrors">
+               <div class="divErrrosInto">
+                  <ol>
+                     <ul>{{form.title.errors}}</ul>
+                     <ul>{{form.briefing.errors}}</ul>
+                     <ul>{{form.text.errors}}</ul>
+                     <ul>{{form.image.errors}}</ul>
+                  </ol>
+               </div>
+            </div>
+            {% endif %}
+            <div class="fontWhite">
+               <div class="form-group">
+                  <label for="" class="">Title</label>
+                  <input id="id_title" maxlength="70" name="title" type="text" value="{{form.title.value}}"
+                     class="form-control" />
+               </div>
+               <div class="form-group">
+                  <label for="" class="">Briefing</label>
+                  <input id="id_briefing" maxlength="100" name="briefing" type="text" value="{{form.briefing.value}}"
+                     class="form-control" />
+               </div>
+               <div class="form-group">
+                  <label for="" class="">Text</label>
+                  <textarea cols="40" id="id_text" name="text" rows="15" class="form-control"
+                     maxlength="3000">{{form.text.value}}</textarea>
+               </div>
+               <div class="form-group">
+                  <label for="" class="">Image</label>
+                  <input id="id_image" name="image" type="file" class="form-control" />
+               </div>
+               <div class="form-group">
+                  <input type="submit" value="Create" class="btn btn-success col-md-1 pull-right">
+                  <a href="{% url 'home' %}" class="btn btn-default col-md-1 pull-right">Back</a>
+               </div>
+            </div>
+         </form>
+      </div>
+   </div>
+</div>
+{% endblock %}

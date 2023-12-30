@@ -1,161 +1,208 @@
-#id_titulo {
-    font-weight: bold;
-}
-
-.divCreate {
-    background-color: #4582ec;
-    border: 3px solid white;
-    border-radius: 10px;
+.divForm {
+  color: #4582ec;
+  margin-top: -5%;
 }
 
 .divErrors {
-    color: red;
-    background-color: #eed78f;
-    border: 2px solid red;
-    border-radius: 10px;
-    font-weight: bold;
+  color: red;
+  background-color: #f4e3ae;
+  border: 2px solid red;
+  border-radius: 10px;
+  font-weight: bold;
 }
 
-.fontWhite {
-    color: white;
-}
-
-.divCreate {
-    background-color: #4582ec;
-    border: 3px solid white;
-    border-radius: 10px;
-    color: white;
-}
-
-.imgHome {
-    width: 1028px;
-    height: 768px;
-    border: 5px solid black;
+.divErrorsInto {
+  padding-top: 1%;
+  padding-bottom: 1%;
 }
 
 .alert-info {
-    color: blue;
+  color: blue;
 }
 
 .alert-success {
-    color: green;
+  color: green;
 }
 
 .alert-warning {
-    color: orange;
+  color: orange;
 }
 
 .alert-danger {
-    color: red;
+  color: red;
 }
 
 .divPost {
-    background-color: white;
-    color: black;
-    margin-top: 30px;
+  background-color: white;
+  color: black;
+  margin-top: 30px;
 }
 
 .divPost:hover {
-    background-color: yellow;
-    color: black;
-    margin-top: 30px;
-    text-decoration: none;
+  background-color: yellow;
+  color: black;
+  margin-top: 30px;
+  text-decoration: none;
 }
 
 .img-show {
-    width: 50%;
-    border: 3px solid black;
-    border-radius: 10px;
+  width: 50%;
+  border: 3px solid black;
+  border-radius: 10px;
 }
 
-.tituloShow {
-    font-size: 40px;
-    font-weight: bold;
+.titleShow {
+  font-size: 40px;
+  font-weight: bold;
 }
 
 .imgShow {
-    border: 0px none;
-    float: left;
-    padding-right: 10px;
-    padding-bottom: 1px;
-    width: 40%;
-    border-radius: 10%;
+  float: left;
+  width: 55%;
+  border: 2px solid black;
+  margin: 15px;
+  border-radius: 5px;
 }
 
 .center-block {
-    float: none !important;
+  float: none !important;
 }
 
-
-}
-.tituloPrincipal {
-    font-size: 60px !important; 
-    font-weight: bold !important;
+.titlePrincipal {
+  font-size: 60px !important;
+  font-weight: bold !important;
 }
 
-.titulopost2 {
-    font-weight: bold;
-    font-size: 25px;
+.titlepost2 {
+  font-weight: bold;
+  font-size: 18px;
 }
-.titulopost3 {
-    font-weight: bold;
-    font-size: 18px;
+
+.titlepost3 {
+  font-weight: bold;
+  font-size: 25px;
 }
-.titulolista {
-    font-size: 15px;
-    font-weight: bold;
+
+.titlelist {
+  font-size: 15px;
+  font-weight: bold;
 }
-.titulotodos {
-    color: gray;
-    font-weight: bold;
+.titleall {
+  color: gray;
+  font-weight: bold;
+  margin-top: 15%;
+  font-size: 25px;
 }
+
 .imghome {
-    border: 3px solid black;
-    width:200px;
-    height:100px;
+  border: 3px solid black;
+  width: 200px;
+  height: 100px;
 }
-hr {
-    height: 0;
-    border: 0;
-    border-top: 1px solid #083972;
+
+.hr-home {
+  height: 0;
+  border: 0;
+  border-top: 1px solid #083972;
 }
-.btnLogin{
-    margin:15px;
+
+.btnLogin {
+  margin: 15px;
 }
 
 .lnkImageEdit:link {
-    color: yellow;
+  color: yellow;
 }
 
 .lnkImageEdit:visited {
-    color: yellow;
+  color: yellow;
 }
 
 .lnkImageEdit:hover {
-    color: hotpink;
+  color: hotpink;
 }
 
 .lnkImageEdit:active {
-    color: yellow;
+  color: yellow;
 }
 
-.txtBriefingShow{
-    color:gray;
-    font-weight: bold;
-    font-size: 20px;
-}
 body {
-    background-color: #aed8e2 !important;
+  background-color: #ebf7fa !important;
 }
 
-      .txtBriefing {
-    color: red;
-    font-weight: bold;
-    font-size: 20px;
+.titlePrincipal {
+  font-size: 60px !important;
+  font-weight: bold !important;
 }
 
-.tituloPrincipal {
-    font-size: 60px !important; 
-    font-weight: bold !important;
+.txtBriefing {
+  color: gray;
+  font-weight: bold;
+  font-size: 20px;
 }
 
+.form-control {
+  border: 2px solid black;
+}
+
+.btn {
+  width: 150px !important;
+  height: 40px !important;
+}
+
+.btn-search {
+  width: 50px !important;
+  height: 40px !important;
+}
+
+textarea {
+  resize: none;
+}
+
+.image-home-current {
+  height: 300px;
+  border: 2px solid black;
+  border-radius: 5px;
+}
+
+.margin-5-top-more {
+  margin-top: 5%;
+}
+
+.title-post {
+  font-weight: bold;
+  font-size: 50px;
+  color: #4582ec;
+}
+
+.briefing-post {
+  font-weight: bold;
+  font-size: 20px;
+  color: gray;
+}
+
+.first-char-show {
+  font-weight: bold;
+  font-size: 80px;
+  color: blue;
+}
+
+.text-post {
+  font-size: 22px;
+}
+
+.image-current-edit {
+  max-width: 250px;
+  border: 2px solid black;
+  border-radius: 5px;
+}
+
+.hr-footer {
+  border: 2px solid black;
+}
+
+.datefooter {
+  text-align: center;
+  font-weight: bold;
+  font-size: 20px;
+}

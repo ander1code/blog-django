@@ -3,15 +3,18 @@
 
 from django.db import models
 
-class Postagem(models.Model):
-    autor = models.ForeignKey('auth.User', on_delete=models.CASCADE)
-    titulo = models.CharField(max_length=100)
-    briefing = models.CharField(max_length=50)
-    texto = models.TextField()
-    imagem = models.ImageField(
-        upload_to='media', blank=True, null=True, default='noimage.png')
-    dataCriacao = models.DateTimeField('Data da Criacao')
+class Post(models.Model):
+    author = models.ForeignKey('auth.User', on_delete=models.CASCADE)
+    title = models.CharField(max_length=70, null=False)
+    briefing = models.CharField(max_length=100, null=False)
+    text = models.TextField(max_length=3000, null=False)
+    image = models.ImageField(upload_to='post', blank=True, null=True, default='noimage.png')
+    createDate = models.DateTimeField('Create Date', null=False)
+    updateDate = models.DateTimeField('Update Date', null=True)
 
     def __unicode__(self):
-        titulo = self.titulo
-        return "%s - %s - %s" % (titulo[0:15], self.autor, self.dataCriacao)
+        title = self.title
+        return "%s - %s - %s" % (title[0:15], self.author, self.createDate)
+    
+    class Meta:
+        verbose_name_plural = "Posts"

@@ -17,30 +17,27 @@ from django.core.paginator import EmptyPage, Paginator, PageNotAnInteger
 from datetime import datetime
 from django.urls import reverse
 
-
 def do_login(request):
     if request.method == 'POST':
         user = authenticate(username=request.POST.get(
             'username'), password=request.POST.get('password'))
         if user is not None:
             auth_login(request, user)
-            messages.success(request, 'Login efetuado com sucesso.')
+            messages.success(request, 'Successfully logged.')
             return HttpResponseRedirect(reverse('home'))
         else:
-            messages.error(request, 'Login e senha inválidos.')
+            messages.error(request, 'Invalid Username and Password.')
             return render(request, 'login.html', {'statuslog': 2})
     else:
         return render(request, 'login.html', {'statuslog': 2})
 
-
 def home(request):
     if request.POST:
-        p_busca = request.POST['busca'] + '%'
-        posts = Postagem.objects.extra(where=["titulo LIKE %s"], params=[
-                                       p_busca]).order_by('-dataCriacao')
+        p_search = request.POST['search'] + '%'
+        posts = Post.objects.extra(where=["title LIKE %s"], params=[p_search]).order_by('-createDate')
         if len(posts) == 0:
             messages.warning(
-                request, 'Nenhum artigo foi encontrado com esse criterio.')
+                request, 'No articles were found with these titles.')
         paginator = Paginator(posts, 7)
         page = request.GET.get('page')
         try:
@@ -50,16 +47,16 @@ def home(request):
         except EmptyPage:
             posts = paginator.page(paginator.num_pages)
 
-        postsAll = Postagem.objects.all().order_by('-dataCriacao')
-        postUltimo = postsAll[:1]
-        post2 = postsAll[1:3]
-        post3 = postsAll[3:6]
-        return render(request, 'home.html', {'postsAll': posts, 'postUltimo': postUltimo, 'post2': post2, 'post3': post3})
+        postsAll = Post.objects.all().order_by('-createDate')
+        postLast = postsAll[:1]
+        post2 = postsAll[1:5]
+        post3 = postsAll[5:8]
+        return render(request, 'home.html', {'postsAll': postsAll, 'postLast': postLast, 'post2': post2, 'post3': post3})
     else:
-        postsAll = Postagem.objects.all().order_by('-dataCriacao')
-        postUltimo = postsAll[:1]
-        post2 = postsAll[1:3]
-        post3 = postsAll[3:6]
+        postsAll = Post.objects.all().order_by('-createDate')
+        postLast = postsAll[:1]
+        post2 = postsAll[1:5]
+        post3 = postsAll[5:8]
 
         paginator = Paginator(postsAll, 7)
         page = request.GET.get('page')
@@ -69,88 +66,84 @@ def home(request):
             postsAll = paginator.page(1)
         except EmptyPage:
             postsAll = paginator.page(paginator.num_pages)
-
-        return render(request, 'home.html', {'postsAll': postsAll, 'postUltimo': postUltimo, 'post2': post2, 'post3': post3})
-
+        return render(request, 'home.html', {'postsAll': postsAll, 'postLast': postLast, 'post2': post2, 'post3': post3})
 
 @login_required(login_url="/login/")
-def criar(request):
+def create(request):
     if request.method == 'POST':
-        frm = frmBlog(request.POST, request.FILES)
+        frm = frmPost(request.POST, request.FILES)
         if frm.is_valid():
-            postagem = frm.save(commit=False)
-            postagem.autor = frm.cleaned_data.get('autor')
-            postagem.titulo = frm.cleaned_data.get('titulo')
-            postagem.briefing = frm.cleaned_data.get('briefing')
-            postagem.texto = frm.cleaned_data.get('texto')
-            postagem.imagem = frm.cleaned_data.get('imagem')
-            postagem.dataCriacao = datetime.now()
-            postagem.save()
-            messages.success(request, 'Postagem criada com sucesso.')
+            post = frm.save(commit=False)
+            post.author = request.user
+            post.title = frm.cleaned_data.get('title')
+            post.briefing = frm.cleaned_data.get('briefing')
+            post.text = frm.cleaned_data.get('text')
+            post.image = frm.cleaned_data.get('image')
+            post.createDate = datetime.now()
+            post.updateDate = None
+            post.save()
+            messages.success(request, 'Successfully created.')
             return HttpResponseRedirect(reverse('home'))
         else:
-            return render(request, 'criacao.html', {'form': frm})
+            return render(request, 'create.html', {'form': frm})
     else:
-        dataCriacao = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-        frm = frmBlog(initial={'autor': request.user.id,
-                      'dataCriacao': dataCriacao, 'titulo': '', 'briefing': '', 'texto': ''})
-    return render(request, 'criacao.html', {'form': frm})
-
+        frm = frmPost(initial={'title': '', 'briefing': '', 'text': ''})
+    return render(request, 'create.html', {'form': frm})
 
 def show(request, id):
-    post = get_object_or_404(Postagem, id=id)
-    autor = User.objects.get(id=post.autor_id)
-    return render(request, "show.html", {'post': post, 'autor': autor})
-
+    post = get_object_or_404(Post, id=id)
+    autor = User.objects.get(id=post.author_id)
+    return render(request, "show.html", {'post': post, 'author': autor})
 
 @login_required(login_url='/login/')
-def editar(request, id):
-    post = get_object_or_404(Postagem, id=id)
-    if request.user.id == post.autor_id:
+def edit(request, id):
+    post = get_object_or_404(Post, id=id)
+    createDate = post.createDate
+    if request.user.id == post.author_id:
         if request.method == 'POST':
-            frm = frmBlog(request.POST, request.FILES, instance=post)
+            frm = frmPost(request.POST, request.FILES, instance=post)
             if frm.is_valid():
-                postagem = frm.save(commit=False)
-                postagem.autor_id = request.user.id
-                postagem.titulo = frm.cleaned_data.get('titulo')
-                postagem.briefing = frm.cleaned_data.get('briefing')
-                postagem.texto = frm.cleaned_data.get('texto')
-                postagem.imagem = frm.cleaned_data.get('imagem')
-                postagem.save()
-                messages.success(request, 'Postagem editada com sucesso.')
-                return render(request, 'show.html', {'post': postagem})
+                post = frm.save(commit=False)
+                post.author_id = request.user.id
+                post.title = frm.cleaned_data.get('title')
+                post.briefing = frm.cleaned_data.get('briefing')
+                post.text = frm.cleaned_data.get('text')
+                post.image = frm.cleaned_data.get('image')
+                post.createDate = createDate
+                post.UpdateDate = datetime.now()
+                post.save()
+                messages.success(request, 'Successfully edited.')
+                return render(request, 'show.html', {'post': post})
             else:
-                return render(request, 'edicao.html', {'form': frm, 'post_id': id})
+                return render(request, 'edit.html', {'form': frm, 'post_id': id})
         else:
-            frm = frmBlog(initial={'autor': post.autor,
-                                   'briefing': post.briefing,
-                                   'titulo': post.titulo,
-                                   'texto': post.texto,
-                                   'imagem': post.imagem,
-                                   'dataCriacao': post.dataCriacao.strftime('%Y-%m-%d %H:%M:%S')})
+            frm = frmPost(initial={'briefing': post.briefing,
+                                   'title': post.title,
+                                   'text': post.text,
+                                   'image': post.image})
 
-        return render(request, 'edicao.html', {'form': frm, 'post_id': id})
+        return render(request, 'edit.html', {'form': frm, 'post_id': id})
     else:
         messages.error(
-            request, 'Este usuario nao esta autorizado a editar esta postagem.')
+            request, 'This user is not authorized to edit this post.')
     return render(request, 'show.html', {'post': post})
 
 
 @login_required(login_url='/login/')
-def excluir(request, id):
-    post = get_object_or_404(Postagem, id=id)
-    if request.user.id == post.autor_id:
+def delete(request, id):
+    post = get_object_or_404(Post, id=id)
+    if request.user.id == post.author_id:
         post.delete()
-        messages.success(request, 'Postagem excluida com sucesso.')
+        messages.success(request, 'Successfully deleted.')
         return HttpResponseRedirect(reverse('home'))
     else:
         messages.error(
-            request, 'Este usuario nao esta autorizado a excluir esta postagem.')
+            request, 'This user is not authorized to delete this post.')
         return HttpResponseRedirect(reverse('home'))
 
 
 @login_required(login_url='/login/')
 def do_logout(request):
     logout(request)
-    messages.success(request, 'Logout efetuado com sucesso.')
+    messages.success(request, 'Sucessfully logout.')
     return HttpResponseRedirect(reverse('home'))
