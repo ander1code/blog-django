@@ -1,18 +1,35 @@
 import os
+from pathlib import Path
+from django.conf.global_settings import LOGIN_REDIRECT_URL
+from django.contrib import messages
 
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PROJECT_PATH = os.path.realpath ( os.path.relpath ( __file__ ) )
+# --------------------------------------------------
+# Project Paths
+# --------------------------------------------------
 
-# SECURITY WARNING: keep the secret key used in production secret!
+# Base directory of the project
+BASE_DIR = Path(__file__).resolve().parent.parent
 
-# SECURITY WARNING: don't run with debug turned on in production!
+# Alternative project path using os (legacy style)
+PROJECT_PATH = os.path.realpath(os.path.relpath(__file__))
+
+# --------------------------------------------------
+# Security Settings
+# --------------------------------------------------
+
+# WARNING: Keep the secret key used in production secret!
+# SECRET_KEY = ''
+
+# WARNING: Don't run with debug turned on in production!
 DEBUG = True
 
-# Host
+# Hosts allowed to access the application
 ALLOWED_HOSTS = ['*']
 
-# Application definition
+# --------------------------------------------------
+# Application Definition
+# --------------------------------------------------
+
 INSTALLED_APPS = [
     'blog',
     'django.contrib.admin',
@@ -35,6 +52,12 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'blogdjango.urls'
 
+WSGI_APPLICATION = 'blogdjango.wsgi.application'
+
+# --------------------------------------------------
+# Templates Configuration
+# --------------------------------------------------
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -51,18 +74,21 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'blogdjango.wsgi.application'
+# --------------------------------------------------
+# Database Configuration
+# --------------------------------------------------
 
-
-# Database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'dbBlog'),
+        'NAME': os.path.join(BASE_DIR, 'dbblog'),
     }
 }
 
-# Password validation
+# --------------------------------------------------
+# Password Validation
+# --------------------------------------------------
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -78,34 +104,54 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+# --------------------------------------------------
 # Internationalization
+# --------------------------------------------------
+
 LANGUAGE_CODE = 'en'
 TIME_ZONE = 'UTC'
 USE_I18N = False
 USE_L10N = False
 USE_TZ = False
 
-# Static files (CSS, JavaScript, Images)
+# --------------------------------------------------
+# Static and Media Files
+# --------------------------------------------------
+
+# URL to access static files
 STATIC_URL = '/static/'
-MEDIA_ROOT = 'media'
-MEDIA_URL = '/post/'
+
+# Directory to collect static files (empty means default)
 STATIC_ROOT = ''
 
-# Login
-from django.conf.global_settings import LOGIN_REDIRECT_URL
+# URL to access media files
+MEDIA_URL = '/media/'
+
+# Directory to store uploaded media files
+MEDIA_ROOT = BASE_DIR / 'media'
+
+# --------------------------------------------------
+# Authentication Redirects
+# --------------------------------------------------
+
 LOGIN_REDIRECT_URL = '/login'
-LOGOUT_REDIRECT_URL  = '/'
+LOGOUT_REDIRECT_URL = '/'
 LOGIN_URL = 'login'
 
-# Messages
-from django.contrib import messages
+# --------------------------------------------------
+# Message Tags
+# --------------------------------------------------
+
 MESSAGE_TAGS = {
-    messages.DEBUG: 'alert-info' ,
-    messages.INFO: 'alert-info' ,
-    messages.SUCCESS: 'alert-success' ,
-    messages.WARNING: 'alert-warning' ,
-    messages.ERROR: 'alert-danger' ,
+    messages.DEBUG: 'alert-info',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
 }
 
-# DATE_INPUT_FORMATS
+# --------------------------------------------------
+# Date Input Formats (optional)
+# --------------------------------------------------
+
 # DATE_INPUT_FORMATS = ['%Y-%m-%d %H:%M:%S']

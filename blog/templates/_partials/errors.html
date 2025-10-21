@@ -1,0 +1,32 @@
+{% if form.errors %}
+  <div class="alert alert-danger alert-dismissible fade in" role="alert" id="form-errors-alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <ul class="list-unstyled">
+      {% for field in form %}
+        {% for error in field.errors %}
+          <li>
+            <strong>{{ field.label }}:</strong>
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            {{ error }}
+          </li>
+        {% endfor %}
+      {% endfor %}
+      {% for error in form.non_field_errors %}
+        <li>
+          <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+          {{ error }}
+        </li>
+      {% endfor %}
+    </ul>
+  </div>
+
+  <script>
+    setTimeout(function() {
+      $('#form-errors-alert').fadeOut('slow', function() {
+        $(this).alert('close');
+      });
+    }, 5000);
+  </script>
+{% endif %}

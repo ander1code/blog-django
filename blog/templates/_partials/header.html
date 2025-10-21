@@ -13,22 +13,22 @@
             <li><a href="{% url 'home' %}"><span class="glyphicon glyphicon-home"></span> Home</a></li>
             <li>
                {% if user.is_authenticated %}
-               <a href="{% url 'create' %}"><span class="glyphicon glyphicon-plus"></span> Create</a>
+                  <a href="{% url 'create-post' %}"><span class="glyphicon glyphicon-plus"></span> Create</a>
                {% endif %}
             </li>
          </ul>
          <ul class="nav navbar-nav navbar-right">
             <li>
                {% if user.is_authenticated %}
-               <a href="{% url 'admin:index' %}"><span class="glyphicon glyphicon-certificate"></span> Admin</a>
+                  <a href="{% url 'admin:index' %}"><span class="glyphicon glyphicon-certificate"></span> Admin</a>
                {% endif %}
             </li>
             <li>
                {% if user.is_authenticated %}
-               <a href="#" data-toggle="modal" data-target="#logoutModal"><span
-                     class="glyphicon glyphicon-log-out"></span> Logout</a>
+                  <a href="#" data-toggle="modal" data-target="#logoutModal"><span
+                        class="glyphicon glyphicon-log-out"></span> Logout</a>
                {% else %}
-               <a href="{% url 'do_login' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+                  <a href="{% url 'login-view' %}"><span class="glyphicon glyphicon-log-in"></span> Login</a>
                {%endif%}
             </li>
          </ul>
@@ -47,7 +47,7 @@
          </div>
          <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal"> No</button>
-            <a href="{% url 'do_logout' %}" class="btn btn-danger" data-toggle="modal"> Yes</a>
+            <a href="{% url 'logout-view' %}" class="btn btn-danger" data-toggle="modal"> Yes</a>
          </div>
       </div>
    </div>

@@ -1,18 +1,18 @@
-{% extends 'base.html' %}
+{% extends 'index.html' %}
 {% block content %}
 <div class="container">
    <div class="row">
 
       <div class="col-md-8">
          {% for post in postLast %}
-         <a href="{% url 'show' id=post.id %}">
+         <a href="{% url 'show-post' id=post.id %}">
             <p class="titlePrincipal">{{post.title}}</p>
             <ul>
                <li class="txtBriefing">
                   <p>{{post.briefing}}</p>
                </li>
             </ul>
-            <p><img src="{{post.image.url}}" alt="{{ post.title }}" class="image-home-current img-responsive">
+            <p><img src="{{post.picture.url}}" alt="{{ post.title }}" class="image-home-current img-responsive">
             </p>
          </a>
          {% endfor %}
@@ -33,7 +33,7 @@
          <ul class="pull-left">
             <div style="margin-top:10%;">
                {% for post in postsAll %}
-               <a href="{% url 'show' id=post.id %}">
+               <a href="{% url 'show-post' id=post.id %}">
                   <li>
                      <p class="titlelist">{{post.title}}</p>
                   </li>
@@ -65,9 +65,9 @@
    </div>
    <div class="row">
       {% for post in post2 %}
-      <a href="{% url 'show' id=post.id %}">
+      <a href="{% url 'show-post' id=post.id %}">
          <div class="col-md-2">
-            <img src="{{post.image.url}}" class="img-responsive imghome">
+            <img src="{{post.picture.url}}" class="img-responsive imghome">
             <p class="titlepost2">{{post.title}}</p>
          </div>
       </a>
@@ -81,7 +81,7 @@
    <div class="row">
       <div class="col-md-12">
          {% for post in post3 %}
-         <a href="{% url 'show' id=post.id %}">
+         <a href="{% url 'show-post' id=post.id %}">
             <div class="col-md-3">
                <p class="titlepost3">{{post.title}}</p>
             </div>
